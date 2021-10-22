@@ -28,7 +28,13 @@ minikube tunnel
 
 ### IBM Kubernetes Service
 
-Follow [standard process](https://cloud.ibm.com/docs/containers?topic=containers-clusters) to create a new cluster. No special configuration needed.
+Follow [standard process](https://cloud.ibm.com/docs/containers?topic=containers-clusters) to create a new cluster. 
+
+Once the cluster is up, you'll need to label each node as follows
+
+``` bash
+kubectl label nodes --all knative.dev/container-runtime=containerd
+```
 
 Tested on a 3-node, single zone (wdc04) v1.22.2_1522 cluster.
 
