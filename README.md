@@ -20,7 +20,7 @@ minikube start --cpus 3 --container-runtime containerd \
 kubectl label nodes minikube knative.dev/container-runtime=containerd
 ```
 
-In a separate terminal, runtime
+In a separate terminal, run
 
 ``` bash
 minikube tunnel
