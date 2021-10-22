@@ -30,7 +30,7 @@ minikube tunnel
 
 Follow [standard process](https://cloud.ibm.com/docs/containers?topic=containers-clusters) to create a new cluster. 
 
-Once the cluster is up, you'll need to label each node as follows
+Once the cluster is up, you'll need to add labels to the nodes
 
 ``` bash
 kubectl label nodes --all knative.dev/container-runtime=containerd
