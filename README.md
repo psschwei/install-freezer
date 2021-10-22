@@ -72,5 +72,6 @@ The [sample app](example.yaml) runs a background goroutine that logs a message e
 ## Source Code
 
 https://www.github.com/knative/serving
+
 https://www.github.com/knative-sandbox/container-freezer
 
