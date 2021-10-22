@@ -1,0 +1,15 @@
+apiVersion: serving.knative.dev/v1 # Current version of Knative
+kind: Service
+metadata:
+  name: example
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+    spec:
+      containerConcurrency: 5
+      containers:
+        - image: docker.io/docker3290894/sleeptalker@sha256:03b98a6bb87c9b2b78906fe83b3275b14dcdc7a4afb0dcc96030ded9b612ade7
+
+---

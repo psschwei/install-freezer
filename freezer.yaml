@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: freeze-tokenreview
+  namespace: knative-serving
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: freeze-tokenreview-binding
+  namespace: knative-serving
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: freeze-tokenreview
+    namespace: knative-serving
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: freeze-daemon-containerd
+  namespace: knative-serving
+spec:
+  selector:
+    matchLabels:
+      name: freeze-daemon
+  template:
+    metadata:
+      labels:
+        name: freeze-daemon
+    spec:
+      serviceAccountName: freeze-tokenreview
+      nodeSelector:
+        knative.dev/container-runtime: containerd
+      containers:
+        - name: daemon
+          securityContext:
+            runAsUser: 0
+          image: docker.io/docker3290894/daemon@sha256:ee21c2de9b7df907b39fefafd2ea857e6169ec51247687c97f4b61fff8ff8d37
+          env:
+            - name: RUNTIME_TYPE
+              value: containerd
+          ports:
+            - containerPort: 8080
+              hostPort: 9696
+          volumeMounts:
+            - name: containerd-socket
+              mountPath: /var/run/containerd/containerd.sock
+      volumes:
+        - name: containerd-socket
+          hostPath:
+            path: /var/run/containerd/containerd.sock
+            type: Socket
+
+---
