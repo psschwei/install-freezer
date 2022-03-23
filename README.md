@@ -1,3 +1,7 @@
+# ARCHIVED
+
+The container freezer has [landed in Knative](https://knative.dev/docs/serving/autoscaling/container-freezer/)
+
 # install-freezer
 
 Setup instructions for using the Knative `container-freezer`
